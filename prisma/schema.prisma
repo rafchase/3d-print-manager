@@ -1,0 +1,94 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String   @id @default(cuid())
+  name         String
+  email        String   @unique
+  passwordHash String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model Filament {
+  id             String   @id @default(cuid())
+  brand          String
+  material       String
+  color          String
+  initialGrams   Int
+  remainingGrams Int
+  price          Decimal  @db.Decimal(10, 2)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  jobs           PrintJob[]
+
+  @@index([material])
+}
+
+model Printer {
+  id            String        @id @default(cuid())
+  name          String        @unique
+  model         String
+  status        PrinterStatus @default(IDLE)
+  powerWatts    Int
+  purchasePrice Decimal?      @db.Decimal(10, 2)
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+  jobs          PrintJob[]
+  maintenance   Maintenance[]
+}
+
+model PrintJob {
+  id            String         @id @default(cuid())
+  name          String
+  status        PrintJobStatus @default(PLANNED)
+  filamentGrams Int
+  durationMins  Int
+  salePrice     Decimal?       @db.Decimal(10, 2)
+  printerId     String
+  filamentId    String
+  printer       Printer       @relation(fields: [printerId], references: [id], onDelete: Restrict)
+  filament      Filament      @relation(fields: [filamentId], references: [id], onDelete: Restrict)
+  startedAt     DateTime?
+  completedAt   DateTime?
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+
+  @@index([printerId, status])
+  @@index([filamentId])
+}
+
+model Maintenance {
+  id          String   @id @default(cuid())
+  title       String
+  description String?
+  performedAt DateTime
+  nextDueAt   DateTime?
+  cost        Decimal? @db.Decimal(10, 2)
+  printerId   String
+  printer     Printer  @relation(fields: [printerId], references: [id], onDelete: Cascade)
+  createdAt   DateTime @default(now())
+
+  @@index([printerId, performedAt])
+}
+
+enum PrinterStatus {
+  IDLE
+  PRINTING
+  MAINTENANCE
+  OFFLINE
+}
+
+enum PrintJobStatus {
+  PLANNED
+  PRINTING
+  COMPLETED
+  FAILED
+  CANCELLED
+}
