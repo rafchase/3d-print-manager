@@ -1,0 +1,42 @@
+@import "tailwindcss";
+
+:root {
+  color-scheme: dark;
+  --background: #07110e;
+  --surface: #10221b;
+  --line: #234637;
+  --text: #edf8f2;
+  --muted: #9db9aa;
+  --accent: #6ee7a8;
+}
+
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: radial-gradient(circle at top right, #17392b, var(--background) 44%);
+  color: var(--text);
+  font-family: Arial, Helvetica, sans-serif;
+  min-height: 100vh;
+}
+a { color: inherit; text-decoration: none; }
+.shell { width: min(1080px, calc(100% - 2rem)); margin: 0 auto; }
+.nav { display: flex; align-items: center; justify-content: space-between; padding: 1.25rem 0; }
+.brand { font-weight: 800; letter-spacing: -.04em; }
+.brand span { color: var(--accent); }
+.button { display: inline-flex; align-items: center; justify-content: center; border: 1px solid var(--accent); background: var(--accent); color: #062115; border-radius: .65rem; padding: .72rem 1rem; font-weight: 750; cursor: pointer; }
+.button.secondary { background: transparent; color: var(--text); border-color: var(--line); }
+.hero { padding: 7rem 0 5rem; max-width: 760px; }
+.eyebrow { color: var(--accent); text-transform: uppercase; letter-spacing: .12em; font-size: .78rem; font-weight: 800; }
+h1 { font-size: clamp(2.8rem, 8vw, 5.8rem); line-height: .95; letter-spacing: -.065em; margin: 1rem 0 1.5rem; }
+.lead { color: var(--muted); font-size: 1.15rem; line-height: 1.7; max-width: 650px; }
+.actions { display: flex; gap: .75rem; margin-top: 2rem; flex-wrap: wrap; }
+.grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; padding-bottom: 5rem; }
+.card { background: color-mix(in srgb, var(--surface) 86%, transparent); border: 1px solid var(--line); border-radius: 1rem; padding: 1.25rem; }
+.card h2 { margin: 0 0 .5rem; font-size: 1rem; }
+.card p { margin: 0; color: var(--muted); line-height: 1.55; }
+.form { max-width: 420px; margin: 6rem auto; }
+.form label { display: block; color: var(--muted); margin: 1rem 0 .4rem; }
+.form input { width: 100%; border: 1px solid var(--line); border-radius: .6rem; padding: .8rem; background: #091811; color: var(--text); }
+.form .button { width: 100%; margin-top: 1.2rem; }
+.error { color: #fca5a5; margin-top: 1rem; }
+@media (max-width: 720px) { .grid { grid-template-columns: 1fr; } .hero { padding-top: 4rem; } }
