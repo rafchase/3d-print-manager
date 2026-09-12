@@ -1,0 +1,10 @@
+{
+  "name": "3D Print Manager",
+  "short_name": "3DPM",
+  "description": "Gestão de impressão 3D, estoque e custos.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#07110e",
+  "theme_color": "#07110e",
+  "icons": [{ "src": "/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }]
+}
