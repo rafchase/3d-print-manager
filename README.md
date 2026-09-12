@@ -25,7 +25,7 @@ Next.js 16, React 19, TypeScript, PostgreSQL, Prisma 6, Tailwind CSS 4, NextAuth
 ## Instalação — Node local
 
 ```bash
-git clone URL_DO_REPOSITORIO
+git clone https://github.com/rafchase/3d-print-manager.git
 cd 3d-print-manager
 npm install
 cp .env.example .env
