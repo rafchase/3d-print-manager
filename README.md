@@ -47,11 +47,10 @@ Copie `.env.example` para `.env`, troque `POSTGRES_PASSWORD`, `ADMIN_PASSWORD` e
 
 ```bash
 docker compose up -d --build
-docker compose exec app npx prisma migrate deploy
-docker compose exec app npm run db:seed
+docker compose run --rm migrate npm run db:seed
 ```
 
-O volume nomeado `postgres_data` mantém o banco entre reinicializações. O modo Node local usa a aplicação na máquina e um PostgreSQL local/remoto; o modo Docker executa aplicação e banco em containers.
+O serviço `migrate` aplica `prisma migrate deploy` automaticamente antes de iniciar a aplicação; o comando adicional cria o administrador. O volume nomeado `postgres_data` mantém o banco entre reinicializações. O modo Node local usa a aplicação na máquina e um PostgreSQL local/remoto; o modo Docker executa aplicação e banco em containers.
 
 ## Variáveis de ambiente
 
@@ -65,6 +64,8 @@ O volume nomeado `postgres_data` mantém o banco entre reinicializações. O mod
 | `POSTGRES_USER` | no Docker | usuário do banco local |
 | `POSTGRES_PASSWORD` | no Docker | senha do banco local |
 | `POSTGRES_DB` | no Docker | nome do banco local |
+| `POSTGRES_PORT` | não | porta PostgreSQL publicada; padrão `5432` |
+| `APP_PORT` | não | porta local da aplicação Docker; padrão `3000` |
 
 Use bancos e variáveis distintos para development, staging e production. Nunca conecte desenvolvimento ou testes ao banco de produção.
 
